@@ -26,6 +26,8 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.graphics.Point;
 import android.media.MediaPlayer;
+import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -37,8 +39,10 @@ import android.widget.TextView;
 
 import org.achartengine.GraphicalView;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
+import java.lang.Object;
 
 import no.nordicsemi.android.nrftoolbox.FeaturesActivity;
 import no.nordicsemi.android.nrftoolbox.R;
@@ -67,6 +71,7 @@ public class HRActivity extends BleProfileActivity implements HRManagerCallbacks
 	private GraphicalView graphView;
 	private LineGraphView lineGraph;
 	private TextView hrValueView, hrLocationView, hrTooHigh;
+//	private TextView calmView;
 	private TextView batteryLevelView;
 
 	private int hrValue = 0;
@@ -85,6 +90,7 @@ public class HRActivity extends BleProfileActivity implements HRManagerCallbacks
 		//TextView tv = (TextView) findViewById(R.id.highHR);
 		hrValueView = findViewById(R.id.text_hrs_value);
 		hrTooHigh = findViewById(R.id.highHR);
+//		calmView = findViewById(R.id.calm);
 //		if(R.id.text_hrs_value > hrThreshold){
 //			tv.setText("Heart rate too high: " + R.id.text_hrs_value + "!");
 //		}
@@ -233,13 +239,24 @@ public class HRActivity extends BleProfileActivity implements HRManagerCallbacks
 											   @Nullable final List<Integer> rrIntervals) {
 		hrValue = heartRate;
 		if(heartRate > hrThreshold){
-			runOnUiThread(() -> hrTooHigh.setText("Heart rate too high: "+heartRate));
-			final Intent newIntent = new Intent(this, no.nordicsemi.android.nrftoolbox.relax.RelaxActivity.class);
+			runOnUiThread(() -> hrTooHigh.setText("Heart rate too high: "+heartRate+"\nIdentify: 5 things you see.\n4 things you can touch\n3 things you can hear\n2 things you can smell\n1 thing you can taste"));
+//			runOnUiThread(() -> calmView.setText("Identify 5 things you see, 4 things you touch"));
+			//final Intent newIntent = new Intent(this, no.nordicsemi.android.nrftoolbox.relax.RelaxActivity.class);
 			//newIntent.putExtra(EXTRA_ADDRESS, intent.getByteArrayExtra(EXTRA_ADDRESS));
-			newIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			startActivity(newIntent);
+			//newIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			//startActivity(newIntent);
 //			MediaPlayer mp = MediaPlayer.create(this, R.raw.calm);
-//			mp.start();
+			//-------------SOUND----------------------
+			Uri myUri=Uri.parse("android.resource://"+getPackageName()+"/raw/calm");
+			MediaPlayer mp = new MediaPlayer();
+			mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+			try {
+				mp.setDataSource(getApplicationContext(), myUri);
+				mp.prepare();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			mp.start();
 		}
 
 		runOnUiThread(() -> hrValueView.setText(getString(R.string.hrs_value, heartRate)));

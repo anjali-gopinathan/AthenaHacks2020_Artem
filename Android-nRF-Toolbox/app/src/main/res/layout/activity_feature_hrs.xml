@@ -143,7 +143,7 @@
 			android:onClick="onConnectClicked"
 			android:text="@string/action_connect"/>
 
-		<TextView
+		<androidx.appcompat.widget.AppCompatTextView
 			android:id="@+id/highHR"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -151,10 +151,23 @@
 			android:layout_alignLeft="@id/graph_hrs"
 			android:layout_alignEnd="@id/device_name"
 			android:layout_alignBottom="@id/action_connect"
-			android:layout_marginLeft="43dp"
-			android:layout_marginEnd="-43dp"
-			android:layout_marginBottom="94dp"
+			android:layout_marginLeft="52dp"
+			android:layout_marginEnd="-52dp"
+			android:layout_marginBottom="141dp"
 			android:layoutDirection="locale" />
+
+		<!--androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/calm"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_above="@id/graph_hrs"
+			android:layout_alignLeft="@id/graph_hrs"
+			android:layout_alignEnd="@id/device_name"
+			android:layout_alignBottom="@id/action_connect"
+			android:layout_marginLeft="52dp"
+			android:layout_marginEnd="-52dp"
+			android:layout_marginBottom="115dp"
+			android:layoutDirection="locale" /-->
 
 	</no.nordicsemi.android.nrftoolbox.widget.ForegroundRelativeLayout>
 </LinearLayout>
