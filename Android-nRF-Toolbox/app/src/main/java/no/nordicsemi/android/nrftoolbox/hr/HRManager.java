@@ -31,6 +31,8 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.Log;
+import android.view.*;
+import android.widget.TextView;
 
 import java.util.List;
 import java.util.UUID;
@@ -40,6 +42,7 @@ import no.nordicsemi.android.ble.common.callback.hr.HeartRateMeasurementDataCall
 import no.nordicsemi.android.ble.common.profile.hr.BodySensorLocation;
 import no.nordicsemi.android.ble.data.Data;
 import no.nordicsemi.android.log.LogContract;
+import no.nordicsemi.android.nrftoolbox.R;
 import no.nordicsemi.android.nrftoolbox.battery.BatteryManager;
 import no.nordicsemi.android.nrftoolbox.parser.BodySensorLocationParser;
 import no.nordicsemi.android.nrftoolbox.parser.HeartRateMeasurementParser;
@@ -58,6 +61,9 @@ public class HRManager extends BatteryManager<HRManagerCallbacks> {
 	private BluetoothGattCharacteristic heartRateCharacteristic, bodySensorLocationCharacteristic;
 
 	private static HRManager managerInstance = null;
+
+	private int hrThreshold = 85;
+
 
 	/**
 	 * Singleton implementation of HRSManager class.
@@ -118,6 +124,16 @@ public class HRManager extends BatteryManager<HRManagerCallbacks> {
 																   @Nullable final Boolean contactDetected,
 																   @Nullable @IntRange(from = 0) final Integer energyExpanded,
 																   @Nullable final List<Integer> rrIntervals) {
+
+							//TextView tv = (TextView) findViewById(R.id.highHR);
+
+//							if(R.id.text_hrs_value > hrThreshold){
+//								//tv.setText("Heart rate too high: " + R.id.text_hrs_value + "!");
+//								runOnUiThread( ()-> );
+//							}
+//							else{
+//								tv.setText("Heart rate fine: " + R.id.text_hrs_value);
+//							}
 							callbacks.onHeartRateMeasurementReceived(device, heartRate, contactDetected, energyExpanded, rrIntervals);
 						}
 					});

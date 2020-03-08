@@ -25,6 +25,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -65,7 +66,7 @@ public class HRActivity extends BleProfileActivity implements HRManagerCallbacks
 
 	private GraphicalView graphView;
 	private LineGraphView lineGraph;
-	private TextView hrValueView, hrLocationView;
+	private TextView hrValueView, hrLocationView, hrTooHigh;
 	private TextView batteryLevelView;
 
 	private int hrValue = 0;
@@ -81,15 +82,15 @@ public class HRActivity extends BleProfileActivity implements HRManagerCallbacks
 
 	private void setGUI() {
 		lineGraph = LineGraphView.getLineGraphView();
-		TextView tv = (TextView) findViewById(R.id.highHR);
+		//TextView tv = (TextView) findViewById(R.id.highHR);
 		hrValueView = findViewById(R.id.text_hrs_value);
-
-		if(R.id.text_hrs_value > hrThreshold){
-			tv.setText("Heart rate high: " + R.id.text_hrs_value + "!");
-		}
-		else{
-			tv.setText("Heart rate fine: " + R.id.text_hrs_value);
-		}
+		hrTooHigh = findViewById(R.id.highHR);
+//		if(R.id.text_hrs_value > hrThreshold){
+//			tv.setText("Heart rate too high: " + R.id.text_hrs_value + "!");
+//		}
+//		else{
+//			tv.setText("Heart rate fine: " + R.id.text_hrs_value);
+//		}
 
 		hrLocationView = findViewById(R.id.text_hrs_position);
 		batteryLevelView = findViewById(R.id.battery);
@@ -231,7 +232,18 @@ public class HRActivity extends BleProfileActivity implements HRManagerCallbacks
 											   @Nullable @IntRange(from = 0) final Integer energyExpanded,
 											   @Nullable final List<Integer> rrIntervals) {
 		hrValue = heartRate;
+		if(heartRate > hrThreshold){
+			runOnUiThread(() -> hrTooHigh.setText("Heart rate too high: "+heartRate));
+			final Intent newIntent = new Intent(this, no.nordicsemi.android.nrftoolbox.relax.RelaxActivity.class);
+			//newIntent.putExtra(EXTRA_ADDRESS, intent.getByteArrayExtra(EXTRA_ADDRESS));
+			newIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			startActivity(newIntent);
+//			MediaPlayer mp = MediaPlayer.create(this, R.raw.calm);
+//			mp.start();
+		}
+
 		runOnUiThread(() -> hrValueView.setText(getString(R.string.hrs_value, heartRate)));
+
 	}
 
 	@Override
