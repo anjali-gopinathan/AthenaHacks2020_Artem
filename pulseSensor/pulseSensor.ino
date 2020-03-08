@@ -45,7 +45,7 @@ void setup() {
      This name will appear in advertising packets
      and can be used by remote devices to identify this BLE device
      The name can be changed but maybe be truncated based on space left in advertisement packet */
-  blePeripheral.setLocalName("HeartRateSketchNo");
+  blePeripheral.setLocalName("Artem");
   blePeripheral.setAdvertisedServiceUuid(heartRateService.uuid());  // add the service UUID
   blePeripheral.addAttribute(heartRateService);   // Add the BLE Heart Rate service
   blePeripheral.addAttribute(heartRateChar); // add the Heart Rate Measurement characteristic
