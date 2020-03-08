@@ -143,5 +143,18 @@
 			android:onClick="onConnectClicked"
 			android:text="@string/action_connect"/>
 
+		<TextView
+			android:id="@+id/highHR"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_above="@id/graph_hrs"
+			android:layout_alignLeft="@id/graph_hrs"
+			android:layout_alignEnd="@id/device_name"
+			android:layout_alignBottom="@id/action_connect"
+			android:layout_marginLeft="43dp"
+			android:layout_marginEnd="-43dp"
+			android:layout_marginBottom="94dp"
+			android:layoutDirection="locale" />
+
 	</no.nordicsemi.android.nrftoolbox.widget.ForegroundRelativeLayout>
 </LinearLayout>

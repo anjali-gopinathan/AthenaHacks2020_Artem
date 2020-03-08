@@ -71,6 +71,8 @@ public class HRActivity extends BleProfileActivity implements HRManagerCallbacks
 	private int hrValue = 0;
 	private int counter = 0;
 
+	private int hrThreshold = 90;
+
 	@Override
 	protected void onCreateView(final Bundle savedInstanceState) {
 		setContentView(R.layout.activity_feature_hrs);
@@ -79,7 +81,16 @@ public class HRActivity extends BleProfileActivity implements HRManagerCallbacks
 
 	private void setGUI() {
 		lineGraph = LineGraphView.getLineGraphView();
+		TextView tv = (TextView) findViewById(R.id.highHR);
 		hrValueView = findViewById(R.id.text_hrs_value);
+
+		if(R.id.text_hrs_value > hrThreshold){
+			tv.setText("Heart rate high: " + R.id.text_hrs_value + "!");
+		}
+		else{
+			tv.setText("Heart rate fine: " + R.id.text_hrs_value);
+		}
+
 		hrLocationView = findViewById(R.id.text_hrs_position);
 		batteryLevelView = findViewById(R.id.battery);
 		showGraph();
