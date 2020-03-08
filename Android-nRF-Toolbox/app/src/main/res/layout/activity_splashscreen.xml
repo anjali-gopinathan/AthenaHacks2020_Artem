@@ -38,8 +38,9 @@
 	<androidx.appcompat.widget.AppCompatImageView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:fitsSystemWindows="true"
-		android:scaleType="centerCrop"
 		android:background="@color/colorNordicLogoTop"
-		app:srcCompat="@drawable/nordic_logo"/>
+		android:cropToPadding="true"
+		android:fitsSystemWindows="true"
+		android:scaleType="centerInside"
+		app:srcCompat="@drawable/artemlogo" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
